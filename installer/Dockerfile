@@ -1,11 +1,11 @@
-FROM ghcr.io/1panel-dev/maxkb-vector-model:v1.0.1 AS vector-model
+FROM ghcr.io/aachain/rag-vector-model AS vector-model
 FROM node:18-alpine3.18 AS web-build
 COPY ui ui
 RUN cd ui && \
     npm install && \
     npm run build && \
     rm -rf ./node_modules
-FROM ghcr.io/1panel-dev/maxkb-python-pg:python3.11-pg15.8 AS stage-build
+FROM ghcr.io/aachain/rag-python-pg AS stage-build
 
 ARG DEPENDENCIES="                    \
         python3-pip"
@@ -29,7 +29,7 @@ RUN python3 -m venv /opt/py3 && \
     poetry install && \
     python3 /opt/maxkb/app/installer/compile.py
 
-FROM ghcr.io/1panel-dev/maxkb-python-pg:python3.11-pg15.8
+FROM ghcr.io/aachain/rag-python-pg
 ARG DOCKER_IMAGE_TAG=dev \
     BUILD_AT \
     GITHUB_COMMIT
