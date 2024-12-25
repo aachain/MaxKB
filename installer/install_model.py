@@ -1,11 +1,4 @@
 # coding=utf-8
-"""
-    @project: maxkb
-    @Author：虎
-    @file： install_model.py
-    @date：2023/12/18 14:02
-    @desc:
-"""
 import json
 import os.path
 from pycrawlers import huggingface
