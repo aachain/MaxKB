@@ -44,7 +44,7 @@ jobs:
       - name: Prepare
         id: prepare
         run: |
-          DOCKER_IMAGE=ghcr.io/aachain/maxkb
+          DOCKER_IMAGE=ghcr.io/aachain/rag
           DOCKER_PLATFORMS=${{ github.event.inputs.architecture }}
           TAG_NAME=${{ github.event.inputs.dockerImageTag }}
           if [[ ${TAG_NAME} == *dev* ]]; then
