@@ -21,6 +21,7 @@ from django.core import cache, validators
 from django.core import signing
 from django.db import transaction, models
 from django.db.models import QuerySet
+from django.db.models.expressions import RawSQL
 from django.http import HttpResponse
 from django.template import Template, Context
 from rest_framework import serializers, status
@@ -46,13 +47,15 @@ from dataset.serializers.common_serializers import list_paragraph, get_embedding
 from embedding.models import SearchMode
 from function_lib.models.function import FunctionLib, PermissionType
 from function_lib.serializers.function_lib_serializer import FunctionLibSerializer, FunctionLibModelSerializer
-from setting.models import AuthOperate
+from setting.models import AuthOperate, TeamMemberPermission
 from setting.models.model_management import Model
 from setting.models_provider import get_model_credential
 from setting.models_provider.tools import get_model_instance_by_model_user_id
 from setting.serializers.provider_serializers import ModelSerializer
 from smartdoc.conf import PROJECT_DIR
 from users.models import User
+from django.db.models import Value
+from django.db.models.fields.json import KeyTextTransform
 
 chat_cache = cache.caches['chat_cache']
 
@@ -279,7 +282,8 @@ class ApplicationSerializer(serializers.Serializer):
                      'x_type': float_location.get('x', {}).get('type', 'right'),
                      'x_value': float_location.get('x', {}).get('value', 0),
                      'y_type': float_location.get('y', {}).get('type', 'bottom'),
-                     'y_value': float_location.get('y', {}).get('value', 30)}))
+                     'y_value': float_location.get('y', {}).get('value', 30),
+                     'max_kb_id': str(uuid.uuid1()).replace('-', '')}))
             response = HttpResponse(s, status=200, headers={'Content-Type': 'text/javascript'})
             return response
 
@@ -684,7 +688,10 @@ class ApplicationSerializer(serializers.Serializer):
                 self.is_valid()
             user_id = self.data.get('user_id')
             mk_instance_bytes = self.data.get('file').read()
-            mk_instance = pickle.loads(mk_instance_bytes)
+            try:
+                mk_instance = pickle.loads(mk_instance_bytes)
+            except Exception as e:
+                raise AppApiException(1001, "不支持的文件格式")
             application = mk_instance.application
             function_lib_list = mk_instance.function_lib_list
             if len(function_lib_list) > 0:
@@ -713,10 +720,11 @@ class ApplicationSerializer(serializers.Serializer):
                                desc=application.get('desc'),
                                prologue=application.get('prologue'), dialogue_number=application.get('dialogue_number'),
                                dataset_setting=application.get('dataset_setting'),
+                               model_setting=application.get('model_setting'),
                                model_params_setting=application.get('model_params_setting'),
                                tts_model_params_setting=application.get('tts_model_params_setting'),
                                problem_optimization=application.get('problem_optimization'),
-                               icon=application.get('icon'),
+                               icon="/ui/favicon.ico",
                                work_flow=work_flow,
                                type=application.get('type'),
                                problem_optimization_prompt=application.get('problem_optimization_prompt'),
@@ -1105,11 +1113,37 @@ class ApplicationSerializer(serializers.Serializer):
                 self.is_valid(raise_exception=True)
             user_id = self.data.get('user_id')
             application_id = self.data.get('application_id')
-            application = Application.objects.filter(user_id=user_id).exclude(id=application_id)
+            application = QuerySet(Application).get(id=application_id)
+
+            application_user_id = user_id if user_id == str(application.user_id) else None
+
+            if application_user_id is not None:
+                all_applications = Application.objects.filter(user_id=application_user_id).exclude(id=application_id)
+            else:
+                all_applications = Application.objects.none()
+
+            # 获取团队共享的应用
+            shared_applications = Application.objects.filter(
+                id__in=TeamMemberPermission.objects.filter(
+                    auth_target_type='APPLICATION',
+                    operate__contains=RawSQL("ARRAY['USE']", []),
+                    member_id__team_id=application.user_id,
+                    member_id__user_id=user_id
+                ).values('target')
+            )
+            all_applications = all_applications.union(shared_applications)
+
             # 把应用的type为WORK_FLOW的应用放到最上面 然后再按名称排序
-            serialized_data = ApplicationSerializerModel(application, many=True).data
+            serialized_data = ApplicationSerializerModel(all_applications, many=True).data
             application = sorted(serialized_data, key=lambda x: (x['type'] != 'WORK_FLOW', x['name']))
             return list(application)
+
+        def get_application(self, app_id, with_valid=True):
+            if with_valid:
+                self.is_valid(raise_exception=True)
+            application = QuerySet(Application).filter(id=self.data.get("application_id")).first()
+            return ApplicationSerializer.Operate(data={'user_id': application.user_id, 'application_id': app_id}).one(
+                with_valid=True)
 
     class ApplicationKeySerializerModel(serializers.ModelSerializer):
         class Meta:

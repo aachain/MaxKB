@@ -91,7 +91,9 @@
                       <p>向量模型：在知识库中对文档内容进行向量化的模型。</p>
                       <p>语音识别：在应用中开启语音识别后用于语音转文字的模型。</p>
                       <p>语音合成：在应用中开启语音播放后用于文字转语音的模型。</p>
-                      <p>重排模型：在高级编排应用中使用多路召回时，对候选分段进行重新排序的模型。</p>
+                      <p>
+                        重排模型：在高级编排应用中使用多路召回时，对候选分段进行重新排序的模型。
+                      </p>
                       <p>图片理解：在高级编排应用中用于图片理解的视觉模型。</p>
                       <p>图片生成：在高级编排应用中用于图片生成的视觉模型。</p>
                     </template>
@@ -155,9 +157,17 @@
         </DynamicsForm>
       </el-tab-pane>
       <el-tab-pane label="高级设置" name="advanced-info">
-        <div class="flex-between mb-8">
+        <el-empty
+          v-if="!base_form_data.model_type || !base_form_data.model_name"
+          description="请先选择基础信息的模型类型和基础模型"
+        />
+        <el-empty
+          v-else-if="base_form_data.model_type === 'RERANKER' || base_form_data.model_type === 'EMBEDDING' || base_form_data.model_type === 'STT'"
+          description="所选模型不支持参数设置"
+        />
+        <div class="flex-between mb-8" v-else>
           <h5>模型参数</h5>
-          <el-button type="text" @click.stop="openAddDrawer()">
+          <el-button type="text" @click.stop="openAddDrawer()" :disabled="base_form_data.model_type !== 'TTS' && base_form_data.model_type !== 'LLM' && base_form_data.model_type !== 'IMAGE' && base_form_data.model_type !== 'TTI'">
             <AppIcon iconName="Plus" class="add-icon" />添加
           </el-button>
         </div>
@@ -321,6 +331,7 @@ const open = (provider: Provider) => {
 const list_base_model = (model_type: any, change?: boolean) => {
   if (change) {
     base_form_data.value.model_name = ''
+    base_form_data.value.model_params_form = []
   }
   if (providerValue.value) {
     ModelApi.listBaseModel(providerValue.value.provider, model_type, base_model_loading).then(
@@ -342,6 +353,7 @@ const close = () => {
   credential_form_data.value = {}
   model_form_field.value = []
   base_model_list.value = []
+  loading.value = false
   dialogVisible.value = false
 }
 const submit = () => {
@@ -360,6 +372,8 @@ const submit = () => {
         emit('submit')
       })
     }
+  }).catch(() => { 
+    MsgError('基础信息有填写错误')
   })
 }
 
