@@ -25,8 +25,9 @@ zhipu_tti_model_credential = ZhiPuTextToImageModelCredential()
 
 model_info_list = [
     ModelInfo('glm-4', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel),
+    ModelInfo('glm-4-flash', '(免费)', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel),
     ModelInfo('glm-4v', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel),
-    ModelInfo('glm-3-turbo', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel)
+    ModelInfo('glm-3-turbo', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel),
 ]
 
 model_info_image_list = [
@@ -46,6 +47,9 @@ model_info_tti_list = [
               ModelTypeConst.TTI, zhipu_tti_model_credential,
               ZhiPuTextToImage),
     ModelInfo('cogview-3-plus', '根据用户文字描述生成高质量图像，支持多图片尺寸',
+              ModelTypeConst.TTI, zhipu_tti_model_credential,
+              ZhiPuTextToImage),
+    ModelInfo('cogview-3-flash', '根据用户文字描述快速、精准生成图像。(免费)',
               ModelTypeConst.TTI, zhipu_tti_model_credential,
               ZhiPuTextToImage),
 ]
