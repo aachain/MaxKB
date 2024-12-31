@@ -47,18 +47,23 @@
 
           <template v-for="(item, index) in filter_function_lib_list" :key="index">
             <div
-              class="workflow-dropdown-item cursor flex p-8-12"
+              class="workflow-dropdown-item cursor flex p-8-12 align-center"
               @click.stop="clickNodes(functionLibNode, item, 'function')"
               @mousedown.stop="onmousedown(functionLibNode, item, 'function')"
             >
-              <component
-                :is="iconComponent(`function-lib-node-icon`)"
-                class="mr-8 mt-4"
-                :size="32"
-              />
+              <component :is="iconComponent(`function-lib-node-icon`)" class="mr-8" :size="32" />
               <div class="pre-wrap">
-                <div class="lighter">{{ item.name }}</div>
-                <el-text type="info" size="small">{{ item.desc }}</el-text>
+                <div class="lighter ellipsis-1" :title="item.name">{{ item.name }}</div>
+                <p>
+                  <el-text
+                    class="ellipsis-1"
+                    type="info"
+                    size="small"
+                    :title="item.desc"
+                    v-if="item.desc"
+                    >{{ item.desc }}</el-text
+                  >
+                </p>
               </div>
             </div>
           </template>
@@ -69,13 +74,13 @@
           <div v-if="filter_application_list.length > 0">
             <template v-for="(item, index) in filter_application_list" :key="index">
               <div
-                class="workflow-dropdown-item cursor flex p-8-12"
+                class="workflow-dropdown-item cursor flex align-center p-8-12"
                 @click.stop="clickNodes(applicationNode, item, 'application')"
                 @mousedown.stop="onmousedown(applicationNode, item, 'application')"
               >
                 <component
                   :is="iconComponent(`application-node-icon`)"
-                  class="mr-8 mt-4"
+                  class="mr-8"
                   :size="32"
                   :item="item"
                 />
@@ -83,7 +88,16 @@
                   <div class="lighter ellipsis" :title="item.name">
                     {{ item.name }}
                   </div>
-                  <el-text type="info" size="small" style="width: 80%">{{ item.desc }}</el-text>
+                  <p>
+                    <el-text
+                      class="ellipsis"
+                      type="info"
+                      size="small"
+                      :title="item.desc"
+                      v-if="item.desc"
+                      >{{ item.desc }}</el-text
+                    >
+                  </p>
                 </div>
                 <div class="status-tag" style="margin-left: auto">
                   <el-tag type="warning" v-if="isWorkFlow(item.type)" style="height: 22px"
@@ -257,7 +271,7 @@ onMounted(() => {
   user-select: none; /* CSS3属性 */
   position: absolute;
   top: 49px;
-  right: 90px;
+  right: 122px;
   z-index: 99;
   width: 268px;
   box-shadow: 0px 4px 8px 0px var(--app-text-color-light-1);
