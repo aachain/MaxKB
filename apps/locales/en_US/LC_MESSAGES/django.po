@@ -1,0 +1,7 @@
+#: .\apps\application\serializers\application_serializers.py:196
+msgid "application name"
+msgstr ""
+
+#: .\apps\application\serializers\application_serializers.py:199
+msgid "application describe"
+msgstr ""
