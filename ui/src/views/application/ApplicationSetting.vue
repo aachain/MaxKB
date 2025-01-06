@@ -3,10 +3,10 @@
     <template #header>
       <div class="flex-between w-full">
         <h3>
-          {{ $t('views.application.applicationForm.title.edit') }}
+          {{ $t('common.setting') }}
         </h3>
         <el-button type="primary" @click="submit(applicationFormRef)" :disabled="loading">
-          保存并发布
+          {{ $t('views.application.applicationForm.buttons.publish') }}
         </el-button>
       </div>
     </template>
@@ -71,7 +71,7 @@
                       @click="openAIParamSettingDialog"
                       :disabled="!applicationForm.model_id"
                     >
-                      {{ $t('views.application.applicationForm.form.paramSetting') }}
+                      {{ $t('views.application.applicationForm.buttons.paramSetting') }}
                     </el-button>
                   </div>
                 </template>
@@ -105,7 +105,8 @@
                           v-if="item.permission_type === 'PUBLIC'"
                           type="info"
                           class="info-tag ml-8"
-                          >公用
+                        >
+                          {{ $t('views.application.applicationForm.form.aiModel.public') }}
                         </el-tag>
                       </div>
                       <el-icon class="check-icon" v-if="item.id === applicationForm.model_id">
@@ -142,39 +143,48 @@
                         <el-icon class="mr-4">
                           <Plus />
                         </el-icon>
-                        {{ $t('views.application.applicationForm.form.addModel') }}
+                        {{ $t('views.application.applicationForm.buttons.addModel') }}
                       </el-button>
                     </div>
                   </template>
                 </el-select>
               </el-form-item>
-              <el-form-item label="角色设定">
+              <el-form-item
+                :label="$t('views.application.applicationForm.form.roleSettings.label')"
+              >
                 <MdEditorMagnify
-                  title="角色设定"
+                  :title="$t('views.application.applicationForm.form.roleSettings.label')"
                   v-model="applicationForm.model_setting.system"
                   style="height: 120px"
                   @submitDialog="submitSystemDialog"
-                  placeholder="你是 xxx 小助手"
+                  :placeholder="
+                    $t('views.application.applicationForm.form.roleSettings.placeholder')
+                  "
                 />
               </el-form-item>
               <el-form-item
-                :label="$t('views.application.applicationForm.form.prompt.label')"
                 prop="model_setting.no_references_prompt"
                 :rules="{
                   required: applicationForm.model_id,
-                  message: '请输入提示词',
+                  message: $t('views.application.applicationForm.form.prompt.requiredMessage'),
                   trigger: 'blur'
                 }"
               >
                 <template #label>
                   <div class="flex align-center">
                     <span class="mr-4"
-                      >{{ $t('views.application.applicationForm.form.prompt.label') }}
-                      (无引用知识库)
+                      >{{
+                        $t('views.application.applicationForm.form.prompt.label') +
+                        $t('views.application.applicationForm.form.prompt.noReferences')
+                      }}
                     </span>
                     <el-tooltip
                       effect="dark"
-                      content="通过调整提示词内容，可以引导大模型聊天方向，该提示词会被固定在上下文的开头。可以使用变量：{question} 是用户提出问题的占位符。"
+                      :content="
+                        $t('views.application.applicationForm.form.prompt.noReferencesTooltip', {
+                          question: '{question}'
+                        })
+                      "
                       placement="right"
                     >
                       <AppIcon iconName="app-warning" class="app-warning-icon"></AppIcon>
@@ -184,14 +194,20 @@
                 </template>
 
                 <MdEditorMagnify
-                  title="提示词(无引用知识库)"
+                  :title="
+                    $t('views.application.applicationForm.form.prompt.label') +
+                    $t('views.application.applicationForm.form.prompt.noReferences')
+                  "
                   v-model="applicationForm.model_setting.no_references_prompt"
                   style="height: 120px"
                   @submitDialog="submitNoReferencesPromptDialog"
                   placeholder="{question}"
                 />
               </el-form-item>
-              <el-form-item label="历史聊天记录" @click.prevent>
+              <el-form-item
+                :label="$t('views.application.applicationForm.form.historyRecord.label')"
+                @click.prevent
+              >
                 <el-input-number
                   v-model="applicationForm.dialogue_number"
                   :min="0"
@@ -208,25 +224,25 @@
                 <template #label>
                   <div class="flex-between">
                     <span>{{
-                      $t('views.application.applicationForm.form.relatedKnowledgeBase')
+                      $t('views.application.applicationForm.form.relatedKnowledge.label')
                     }}</span>
                     <div>
                       <el-button type="primary" link @click="openParamSettingDialog">
                         <AppIcon iconName="app-operation" class="mr-4"></AppIcon>
-                        {{ $t('views.application.applicationForm.form.paramSetting') }}
+                        {{ $t('views.application.applicationForm.buttons.paramSetting') }}
                       </el-button>
                       <el-button type="primary" link @click="openDatasetDialog">
                         <el-icon class="mr-4">
                           <Plus />
                         </el-icon>
-                        {{ $t('views.application.applicationForm.form.add') }}
+                        {{ $t('common.add') }}
                       </el-button>
                     </div>
                   </div>
                 </template>
                 <div class="w-full">
                   <el-text type="info" v-if="applicationForm.dataset_id_list?.length === 0"
-                    >{{ $t('views.application.applicationForm.form.relatedKnowledgeBaseWhere') }}
+                    >{{ $t('views.application.applicationForm.form.relatedKnowledge.placeholder') }}
                   </el-text>
                   <el-row :gutter="12" v-else>
                     <el-col
@@ -278,7 +294,7 @@
                 prop="model_setting.prompt"
                 :rules="{
                   required: applicationForm.model_id,
-                  message: '请输入提示词',
+                  message: $t('views.application.applicationForm.form.prompt.requiredMessage'),
                   trigger: 'blur'
                 }"
               >
@@ -286,11 +302,16 @@
                   <div class="flex align-center">
                     <span class="mr-4">
                       {{ $t('views.application.applicationForm.form.prompt.label') }}
-                      (引用知识库)
+                      {{ $t('views.application.applicationForm.form.prompt.references') }}
                     </span>
                     <el-tooltip
                       effect="dark"
-                      content="通过调整提示词内容，可以引导大模型聊天方向，该提示词会被固定在上下文的开头。可以使用变量：{data} 是引用知识库中分段的占位符；{question} 是用户提出问题的占位符。"
+                      :content="
+                        $t('views.application.applicationForm.form.prompt.referencesTooltip', {
+                          data: '{data}',
+                          question: '{question}'
+                        })
+                      "
                       placement="right"
                     >
                       <AppIcon iconName="app-warning" class="app-warning-icon"></AppIcon>
@@ -300,7 +321,10 @@
                 </template>
 
                 <MdEditorMagnify
-                  title="提示词(引用知识库)"
+                  :title="
+                    $t('views.application.applicationForm.form.prompt.label') +
+                    $t('views.application.applicationForm.form.prompt.references')
+                  "
                   v-model="applicationForm.model_setting.prompt"
                   style="height: 150px"
                   @submitDialog="submitPromptDialog"
@@ -501,7 +525,7 @@
       </el-col>
       <el-col :span="14" class="p-24 border-l">
         <h4 class="title-decoration-1 mb-16">
-          {{ $t('views.application.applicationForm.form.apptest') }}
+          {{ $t('views.application.applicationForm.title.apptest') }}
         </h4>
         <div class="dialog-bg">
           <div class="flex align-center p-24">
@@ -695,7 +719,7 @@ const submit = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       application.asyncPutApplication(id, applicationForm.value, loading).then((res) => {
-        MsgSuccess(t('views.application.applicationForm.buttons.saveSuccess'))
+        MsgSuccess(t('common.saveSuccess'))
       })
     }
   })

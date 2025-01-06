@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="$t('views.application.applicationList.createApplication')"
+    :title="$t('views.application.createApplication')"
     v-model="dialogVisible"
     width="650"
     append-to-body
@@ -44,7 +44,7 @@
                 :class="applicationForm.type === 'SIMPLE' ? 'active' : ''"
               >
                 <el-radio value="SIMPLE" size="large">
-                  <p class="mb-4">{{ $t('views.application.applicationList.simple') }}</p>
+                  <p class="mb-4">{{ $t('views.application.simple') }}</p>
                   <el-text type="info">{{ $t('views.application.applicationForm.form.appType.simplePlaceholder') }}</el-text>
                 </el-radio>
               </el-card>
@@ -56,7 +56,7 @@
                 :class="isWorkFlow(applicationForm.type) ? 'active' : ''"
               >
                 <el-radio value="WORK_FLOW" size="large">
-                  <p class="mb-4">{{ $t('views.application.applicationList.workflow') }}</p>
+                  <p class="mb-4">{{ $t('views.application.workflow') }}</p>
                   <el-text type="info">{{ $t('views.application.applicationForm.form.appType.workflowPlaceholder') }}</el-text>
                 </el-radio>
               </el-card>
@@ -68,10 +68,10 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click.prevent="dialogVisible = false" :loading="loading">
-          {{ $t('views.application.applicationForm.buttons.cancel') }}
+          {{ $t('common.cancel') }}
         </el-button>
         <el-button type="primary" @click="submitHandle(applicationFormRef)" :loading="loading">
-          {{ $t('views.application.applicationForm.buttons.create') }}
+          {{ $t('common.create') }}
         </el-button>
       </span>
     </template>
@@ -198,7 +198,7 @@ const submitHandle = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid) => {
     if (valid) {
       applicationApi.postApplication(applicationForm.value, loading).then((res) => {
-        MsgSuccess(t('views.application.applicationForm.buttons.createSuccess'))
+        MsgSuccess(t('common.createSuccess'))
         if (isWorkFlow(applicationForm.value.type)) {
           router.push({ path: `/application/${res.data.id}/workflow` })
         } else {

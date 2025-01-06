@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="$t('views.application.applicationForm.title.copy')"
+    :title="$t('views.application.copyApplication')"
     v-model="dialogVisible"
     width="650"
     append-to-body
@@ -36,10 +36,10 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click.prevent="dialogVisible = false" :loading="loading">
-          {{ $t('views.application.applicationForm.buttons.cancel') }}
+          {{ $t('common.cancel') }}
         </el-button>
         <el-button type="primary" @click="submitValid(applicationFormRef)" :loading="loading">
-          {{ $t('views.application.applicationForm.buttons.copy') }}
+          {{ $t('common.copy') }}
         </el-button>
       </span>
     </template>
@@ -161,7 +161,7 @@ const submitHandle = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid) => {
     if (valid) {
       applicationApi.postApplication(applicationForm.value, loading).then((res) => {
-        MsgSuccess(t('views.application.applicationForm.buttons.createSuccess'))
+        MsgSuccess(t('common.createSuccess'))
         if (isWorkFlow(applicationForm.value.type)) {
           router.push({ path: `/application/${res.data.id}/workflow` })
         } else {

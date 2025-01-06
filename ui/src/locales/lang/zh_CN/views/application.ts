@@ -1,34 +1,31 @@
 export default {
-  applicationList: {
-    title: '应用',
-    createApplication: '创建应用',
-    importApplication: '导入应用',
-    creator: '创建者',
-    workflow: '高级编排',
-    simple: '简单配置',
-    searchBar: {
-      placeholder: '按名称搜索'
-    },
-    setting: {
-      demo: '演示',
-      copy: '复制',
-      import: '导出'
-    },
-    delete: {
-      confirmTitle: '是否删除应用：',
-      confirmMessage: '删除后该应用将不再提供服务，请谨慎操作。'
-    },
-    tip: {
-      importError: '导出失败',
-      professionalMessage: '社区版最多支持 5 个应用，如需拥有更多应用，请升级为专业版。'
-    }
+  title: '应用',
+  createApplication: '创建应用',
+  importApplication: '导入应用',
+  copyApplication: '复制应用',
+  creator: '创建者',
+  workflow: '高级编排',
+  simple: '简单配置',
+  searchBar: {
+    placeholder: '按名称搜索'
+  },
+  setting: {
+    demo: '演示',
+    copy: '复制',
+    import: '导出'
+  },
+  delete: {
+    confirmTitle: '是否删除应用：',
+    confirmMessage: '删除后该应用将不再提供服务，请谨慎操作。'
+  },
+  tip: {
+    importError: '导出失败',
+    professionalMessage: '社区版最多支持 5 个应用，如需拥有更多应用，请升级为专业版。'
   },
   applicationForm: {
     title: {
-      create: '创建应用',
-      edit: '设置',
       info: '应用信息',
-      copy: '复制应用'
+      apptest: '调试预览'
     },
     form: {
       appName: {
@@ -48,42 +45,51 @@ export default {
       aiModel: {
         label: 'AI 模型',
         placeholder: '请选择 AI 模型',
-        unavailable: '（不可用）'
+        unavailable: '（不可用）',
+        public: '公用'
+      },
+      roleSettings: {
+        label: '角色设定',
+        placeholder: '你是 xxx 小助手'
       },
       prompt: {
         label: '提示词',
+        noReferences: ' (无引用知识库)',
+        references: ' (引用知识库)',
         placeholder: '请输入提示词',
-        tooltip:
-          '通过调整提示词内容，可以引导大模型聊天方向，该提示词会被固定在上下文的开头。可以使用变量：{data} 是携带知识库中已知信息；{question} 是用户提出的问题。'
+        requiredMessage: '请输入提示词',
+        noReferencesTooltip:
+          '通过调整提示词内容，可以引导大模型聊天方向，该提示词会被固定在上下文的开头。可以使用变量：{question} 是用户提出问题的占位符。',
+        referencesTooltip:
+          '通过调整提示词内容，可以引导大模型聊天方向，该提示词会被固定在上下文的开头。可以使用变量：{data} 是引用知识库中分段的占位符；{question} 是用户提出问题的占位符。'
+      },
+      historyRecord: {
+        label: '历史聊天记录'
+      },
+      relatedKnowledge: {
+        label: '关联知识库',
+        placeholder: '关联知识库展示在这里'
       },
       multipleRoundsDialogue: '多轮对话',
-      relatedKnowledgeBase: '关联知识库',
-      relatedKnowledgeBaseWhere: '关联知识库展示在这里',
+
       prologue: '开场白',
       problemOptimization: {
         label: '问题优化',
         tooltip: '根据历史聊天优化完善当前问题，更利于匹配知识点。'
-      },
-      addModel: '添加模型',
-      paramSetting: '参数设置',
-      add: '添加',
-      apptest: '调试预览'
+      }
     },
     buttons: {
-      confirm: '确认',
-      cancel: '取消',
-      create: '创建',
-      createSuccess: '创建成功',
-      save: '保存',
-      saveSuccess: '保存成功',
-      copy: '复制',
-      copySuccess: '复制成功'
+      publish: '保存并发布',
+      paramSetting: '参数设置',
+      addModel: '添加模型'
     },
-    dialogues: {
+
+    dialog: {
       addDataset: '添加关联知识库',
-      removeDataset: '移除知识库',
-      paramSettings: '参数设置',
-      refresh: '刷新',
+      addDatasetPlaceholder: '所选知识库必须使用相同的 Embedding 模型',
+      selected: '已选',
+      countDataset: '个知识库',
+
       selectSearchMode: '检索模式',
       vectorSearch: '向量检索',
       vectorSearchTooltip: '向量检索是一种基于向量相似度的检索方式，适用于知识库中的大数据量场景。',

@@ -1,7 +1,7 @@
 <template>
   <div class="application-list-container p-24" style="padding-top: 16px">
     <div class="flex-between mb-16">
-      <h4>{{ $t('views.application.applicationList.title') }}</h4>
+      <h4>{{ $t('views.application.title') }}</h4>
       <div class="flex-between">
         <el-select
           v-model="selectUserId"
@@ -19,7 +19,7 @@
         <el-input
           v-model="searchValue"
           @change="searchHandle"
-          :placeholder="$t('views.application.applicationList.searchBar.placeholder')"
+          :placeholder="$t('views.application.searchBar.placeholder')"
           prefix-icon="Search"
           class="w-240"
           style="min-width: 240px"
@@ -41,7 +41,7 @@
             <el-card shadow="hover" class="application-card-add" style="--el-card-padding: 8px">
               <div class="card-add-button flex align-center cursor p-8" @click="openCreateDialog">
                 <AppIcon iconName="app-add-application" class="mr-8"></AppIcon>
-                {{ $t('views.application.applicationList.createApplication') }}
+                {{ $t('views.application.createApplication') }}
               </div>
               <el-divider style="margin: 8px 0" />
               <el-upload
@@ -57,7 +57,7 @@
               >
                 <div class="flex align-center cursor p-8">
                   <AppIcon iconName="app-import" class="mr-8"></AppIcon>
-                  {{ $t('views.application.applicationList.importApplication') }}
+                  {{ $t('views.application.importApplication') }}
                 </div>
               </el-upload>
             </el-card>
@@ -100,16 +100,16 @@
               <template #subTitle>
                 <el-text class="color-secondary" size="small">
                   <auto-tooltip :content="item.username">
-                    {{ $t('views.application.applicationList.creator') }}: {{ item.username }}
+                    {{ $t('views.application.creator') }}: {{ item.username }}
                   </auto-tooltip>
                 </el-text>
               </template>
               <div class="status-tag">
                 <el-tag type="warning" v-if="isWorkFlow(item.type)" style="height: 22px">
-                  {{ $t('views.application.applicationList.workflow') }}</el-tag
+                  {{ $t('views.application.workflow') }}</el-tag
                 >
                 <el-tag class="blue-tag" v-else style="height: 22px">
-                  {{ $t('views.application.applicationList.simple') }}
+                  {{ $t('views.application.simple') }}
                 </el-tag>
               </div>
 
@@ -117,7 +117,7 @@
                 <div class="footer-content">
                   <el-tooltip
                     effect="dark"
-                    :content="$t('views.application.applicationList.setting.demo')"
+                    :content="$t('views.application.setting.demo')"
                     placement="top"
                   >
                     <el-button text @click.stop @click="getAccessToken(item.id)">
@@ -143,12 +143,12 @@
                             @click="copyApplication(item)"
                           >
                             <AppIcon iconName="app-copy"></AppIcon>
-                            {{ $t('views.application.applicationList.setting.copy') }}
+                            {{ $t('common.copy') }}
                           </el-dropdown-item>
                           <el-dropdown-item @click.stop="exportApplication(item)">
                             <AppIcon iconName="app-export"></AppIcon>
 
-                            {{ $t('views.application.applicationList.setting.import') }}
+                            {{ $t('views.application.setting.import') }}
                           </el-dropdown-item>
                           <el-dropdown-item icon="Delete" @click.stop="deleteApplication(item)">{{
                             $t('common.delete')
@@ -229,7 +229,7 @@ const exportApplication = (application: any) => {
     if (e.response.status !== 403) {
       e.response.data.text().then((res: string) => {
         MsgError(
-          `${t('views.application.applicationList.tip.importError')}:${JSON.parse(res).message}`
+          `${t('views.application.tip.importError')}:${JSON.parse(res).message}`
         )
       })
     }
@@ -249,7 +249,7 @@ function openCreateDialog() {
   } else {
     MsgConfirm(
       `${t('common.tip')}`,
-      `${t('views.application.applicationList.tip.professionalMessage')}`,
+      `${t('views.application.tip.professionalMessage')}`,
       {
         cancelButtonText: `${t('common.confirm')}`,
         confirmButtonText: `${t('common.professional')}`
@@ -325,8 +325,8 @@ function getAccessToken(id: string) {
 function deleteApplication(row: any) {
   MsgConfirm(
     // @ts-ignore
-    `${t('views.application.applicationList.delete.confirmTitle')}${row.name} ?`,
-    t('views.application.applicationList.delete.confirmMessage'),
+    `${t('views.application.delete.confirmTitle')}${row.name} ?`,
+    t('views.application.delete.confirmMessage'),
     {
       confirmButtonText: t('common.confirm'),
       cancelButtonText: t('common.cancel'),

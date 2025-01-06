@@ -82,7 +82,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click.prevent="dialogVisible = false" :loading="loading">
-          {{ $t('views.application.applicationForm.buttons.cancel') }}
+          {{ $t('common.cancel') }}
         </el-button>
         <el-button type="primary" @click="submitHandle" :loading="loading">
           {{ $t('views.application.applicationForm.buttons.create') }}

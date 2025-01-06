@@ -10,6 +10,10 @@ export default {
   components,
   zhCn,
   common: {
+    create: '创建',
+    createSuccess: '创建成功',
+    copy: '复制',
+    copySuccess: '复制成功',
     save: '保存',
     saveSuccess: '保存成功',
     delete: '删除',
@@ -18,7 +22,11 @@ export default {
     cancel: '取消',
     confirm: '确认',
     tip: '提示',
-    professional:'购买专业版'
+    add: '添加',
+    refresh: '刷新',
+    search: '搜索',
+    clear:'清空',
+    professional: '购买专业版'
   },
   login: {
     authentication: '登录认证',
