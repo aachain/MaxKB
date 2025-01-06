@@ -263,9 +263,9 @@ class CheckCodeSerializer(ApiMixin, serializers.Serializer):
     def get_response_body_api(self):
         return get_api_response(openapi.Schema(
             type=openapi.TYPE_BOOLEAN,
-            title="是否成功",
+            title=_('Is it successful'),
             default=True,
-            description="错误提示"))
+            description=_('Error message')))
 
 
 class RePasswordSerializer(ApiMixin, serializers.Serializer):
