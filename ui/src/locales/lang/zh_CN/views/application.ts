@@ -1,27 +1,26 @@
 export default {
   applicationList: {
     title: '应用',
+    createApplication: '创建应用',
+    importApplication: '导入应用',
+    creator: '创建者',
+    workflow: '高级编排',
+    simple: '简单配置',
     searchBar: {
       placeholder: '按名称搜索'
     },
-    card: {
-      createApplication: '创建应用',
-      overview: '概览',
+    setting: {
       demo: '演示',
-      setting: '设置',
-      delete: {
-        tooltip: '删除',
-        confirmTitle: '是否删除应用：',
-        confirmMessage: '删除后该应用将不再提供服务，请谨慎操作。',
-        confirmButton: '删除',
-        cancelButton: '取消',
-        successMessage: '删除成功'
-      }
+      copy: '复制',
+      import: '导出'
     },
-    tooltips: {
-      demo: '演示',
-      setting: '设置',
-      delete: '删除'
+    delete: {
+      confirmTitle: '是否删除应用：',
+      confirmMessage: '删除后该应用将不再提供服务，请谨慎操作。'
+    },
+    tip: {
+      importError: '导出失败',
+      professionalMessage: '社区版最多支持 5 个应用，如需拥有更多应用，请升级为专业版。'
     }
   },
   applicationForm: {
@@ -40,6 +39,11 @@ export default {
       appDescription: {
         label: '应用描述',
         placeholder: '描述该应用的应用场景及用途，如：XXX 小助手回答用户提出的 XXX 产品使用问题'
+      },
+      appType: {
+        label: '选择应用类型',
+        simplePlaceholder: '适合新手创建小助手',
+        workflowPlaceholder: '适合高级用户自定义小助手的工作流'
       },
       aiModel: {
         label: 'AI 模型',

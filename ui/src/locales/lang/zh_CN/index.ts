@@ -13,8 +13,12 @@ export default {
     save: '保存',
     saveSuccess: '保存成功',
     delete: '删除',
+    deleteSuccess: '删除成功',
     setting: '设置',
     cancel: '取消',
+    confirm: '确认',
+    tip: '提示',
+    professional:'购买专业版'
   },
   login: {
     authentication: '登录认证',
