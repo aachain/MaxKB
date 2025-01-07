@@ -1,6 +1,6 @@
 <template>
   <login-layout v-if="user.isEnterprise() ? user.themeInfo : true" v-loading="loading">
-    <LoginContainer :subTitle="user.themeInfo?.slogan || '欢迎使用 MaxKB 智能知识库问答系统'">
+    <LoginContainer :subTitle="user.themeInfo?.slogan || '欢迎使用 ChatWise 智能知识库问答系统'">
       <h2 class="mb-24" v-if="!showQrCodeTab">{{ loginMode || '普通登录' }}</h2>
       <div v-if="!showQrCodeTab">
         <el-form

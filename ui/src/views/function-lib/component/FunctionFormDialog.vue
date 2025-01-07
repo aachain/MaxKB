@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="visible" size="60%" :before-close="close">
+  <el-dialog v-model="visible" size="60%" :before-close="close">
     <template #header>
       <h4>{{ title }}</h4>
     </template>
@@ -149,15 +149,15 @@
         </div>
       </template>
     </el-dialog>
-    <FunctionDebugDrawer ref="FunctionDebugDrawerRef" />
+    <FunctionDebugDialog ref="FunctionDebugDialogRef" />
     <FieldFormDialog ref="FieldFormDialogRef" @refresh="refreshFieldList" />
-  </el-drawer>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
 import FieldFormDialog from './FieldFormDialog.vue'
-import FunctionDebugDrawer from './FunctionDebugDrawer.vue'
+import FunctionDebugDialog from './FunctionDebugDialog.vue'
 import type { functionLibData } from '@/api/type/function-lib'
 import functionLibApi from '@/api/function-lib'
 import type { FormInstance } from 'element-plus'
@@ -170,7 +170,7 @@ const props = defineProps({
 
 const emit = defineEmits(['refresh'])
 const FieldFormDialogRef = ref()
-const FunctionDebugDrawerRef = ref()
+const FunctionDebugDialogRef = ref()
 
 const FormRef = ref()
 
@@ -245,7 +245,7 @@ function areAllValuesNonEmpty(obj: any) {
 }
 
 function openDebug() {
-  FunctionDebugDrawerRef.value.open(form.value)
+  FunctionDebugDialogRef.value.open(form.value)
 }
 
 function deleteField(index: any) {

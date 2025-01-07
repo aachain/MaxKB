@@ -31,7 +31,7 @@ const isActive = computed(() => {
 </script>
 <style lang="scss" scoped>
 .menu-item-container {
-  margin-right: 28px;
+  margin: 28px;
   cursor: pointer;
   font-size: 16px;
   position: relative;

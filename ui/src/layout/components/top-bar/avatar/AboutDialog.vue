@@ -34,22 +34,9 @@
       <div class="flex">
         <span class="label">备注</span><span>{{ licenseInfo?.remark || '-' }}</span>
       </div>
-      <div class="mt-16 flex align-center" v-if="user.showXpack()">
-        <el-upload
-          ref="uploadRef"
-          action="#"
-          :auto-upload="false"
-          :show-file-list="false"
-          :on-change="onChange"
-          v-hasPermission="new Role('ADMIN')"
-        >
-          <el-button class="border-primary mr-16">更新 License</el-button>
-        </el-upload>
-      </div>
+
     </div>
-    <div class="border-t text-center mt-16 p-16 pb-0">
-      <el-text type="info">2014-2025 版权所有 © 杭州飞致云信息科技有限公司</el-text>
-    </div>
+
   </el-dialog>
 </template>
 <script setup lang="ts">

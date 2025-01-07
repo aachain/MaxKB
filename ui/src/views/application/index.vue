@@ -1,11 +1,12 @@
 <template>
   <div class="application-list-container p-24" style="padding-top: 16px">
     <div class="flex-between mb-16">
-      <h4>{{ $t('views.application.applicationList.title') }}</h4>
+      <h2>我的{{ $t('views.application.applicationList.title') }}</h2>
       <div class="flex-between">
         <el-select
           v-model="selectUserId"
           class="mr-12"
+          v-show="false"
           @change="searchHandle"
           style="max-width: 240px; width: 150px"
         >
@@ -21,10 +22,27 @@
           @change="searchHandle"
           :placeholder="$t('views.application.applicationList.searchBar.placeholder')"
           prefix-icon="Search"
-          class="w-240"
+          class="w-240 mr-12"
           style="min-width: 240px"
           clearable
         />
+        <el-button type="primary" class="mr-12" @click="openCreateDialog">
+          创建应用</el-button>
+          <el-upload
+                ref="elUploadRef"
+                :file-list="[]"
+                action="#"
+                multiple
+                :auto-upload="false"
+                :show-file-list="false"
+                :limit="1"
+                :on-change="(file: any, fileList: any) => importApplication(file)"
+                class="card-add-button"
+              >
+                <div class="flex align-center cursor p-8">
+                  导入应用
+                </div>
+              </el-upload>
       </div>
     </div>
     <div v-loading.fullscreen.lock="paginationConfig.current_page === 1 && loading">
@@ -37,30 +55,6 @@
         :loading="loading"
       >
         <el-row :gutter="15">
-          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="mb-16">
-            <el-card shadow="hover" class="application-card-add" style="--el-card-padding: 8px">
-              <div class="card-add-button flex align-center cursor p-8" @click="openCreateDialog">
-                <AppIcon iconName="app-add-application" class="mr-8"></AppIcon>
-                创建应用
-              </div>
-              <el-divider style="margin: 8px 0" />
-              <el-upload
-                ref="elUploadRef"
-                :file-list="[]"
-                action="#"
-                multiple
-                :auto-upload="false"
-                :show-file-list="false"
-                :limit="1"
-                :on-change="(file: any, fileList: any) => importApplication(file)"
-                class="card-add-button"
-              >
-                <div class="flex align-center cursor p-8">
-                  <AppIcon iconName="app-import" class="mr-8"></AppIcon>导入应用
-                </div>
-              </el-upload>
-            </el-card>
-          </el-col>
           <el-col
             :xs="24"
             :sm="12"
@@ -242,26 +236,8 @@ const importApplication = (file: any) => {
   })
 }
 function openCreateDialog() {
-  if (user.isEnterprise()) {
-    CreateApplicationDialogRef.value.open()
-  } else {
-    MsgConfirm(`提示`, '社区版最多支持 5 个应用，如需拥有更多应用，请升级为专业版。', {
-      cancelButtonText: '确定',
-      confirmButtonText: '购买专业版'
-    })
-      .then(() => {
-        window.open('https://maxkb.cn/pricing.html', '_blank')
-      })
-      .catch(() => {
-        common
-          .asyncGetValid(ValidType.Application, ValidCount.Application, loading)
-          .then(async (res: any) => {
-            if (res?.data) {
-              CreateApplicationDialogRef.value.open()
-            }
-          })
-      })
-  }
+  CreateApplicationDialogRef.value.open()
+
 }
 
 function searchHandle() {

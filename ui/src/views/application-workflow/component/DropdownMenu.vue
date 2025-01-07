@@ -31,7 +31,7 @@
           </div>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="函数库" name="function">
+      <el-tab-pane label="工具箱" name="function">
         <el-scrollbar height="400">
           <div
             class="workflow-dropdown-item cursor flex p-8-12"

@@ -10,55 +10,7 @@
       <TopMenu></TopMenu>
     </div>
     <div class="flex-center avatar">
-      <el-button
-        v-if="!user.isEnterprise()"
-        link
-        type="primary"
-        @click="toUrl('https://maxkb.cn/pricing.html')"
-        class="mr-8"
-      >
-        <AppIcon iconName="app-pricing" class="mr-8" style="font-size: 20px"></AppIcon>
-        购买专业版
-      </el-button>
-      <el-tooltip
-        effect="dark"
-        :content="$t('layout.topbar.github')"
-        placement="top"
-        v-if="user.themeInfo?.showProject"
-      >
-        <AppIcon
-          iconName="app-github"
-          class="cursor color-secondary mr-8 ml-8"
-          style="font-size: 20px"
-          @click="toUrl(user.themeInfo?.projectUrl)"
-        ></AppIcon>
-      </el-tooltip>
-      <el-tooltip
-        effect="dark"
-        :content="$t('layout.topbar.wiki')"
-        placement="top"
-        v-if="user.themeInfo?.showUserManual"
-      >
-        <AppIcon
-          iconName="app-reading"
-          class="cursor color-secondary mr-8 ml-8"
-          style="font-size: 20px"
-          @click="toUrl(user.themeInfo?.userManualUrl)"
-        ></AppIcon>
-      </el-tooltip>
-      <el-tooltip
-        effect="dark"
-        :content="$t('layout.topbar.forum')"
-        placement="top"
-        v-if="user.themeInfo?.showForum"
-      >
-        <AppIcon
-          iconName="app-help"
-          class="cursor color-secondary mr-16 ml-8"
-          style="font-size: 20px"
-          @click="toUrl(user.themeInfo?.forumUrl)"
-        ></AppIcon>
-      </el-tooltip>
+
       <el-dropdown v-if="false" trigger="click" type="primary">
         <template #dropdown>
           <el-dropdown-menu>
@@ -108,7 +60,7 @@ function toUrl(url: string) {
   padding: var(--app-header-padding);
 
   .app-title-container {
-    margin-right: 45px;
+    margin-right: 200px;
   }
 
   .line {

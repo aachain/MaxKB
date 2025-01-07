@@ -1,12 +1,13 @@
 <template>
   <div class="dataset-list-container p-24" style="padding-top: 16px">
     <div class="flex-between mb-16">
-      <h4>知识库</h4>
+      <h2>我的知识库</h2>
       <div class="flex-between">
         <el-select
           v-model="selectUserId"
           class="mr-12"
           @change="searchHandle"
+          v-show="false"
           style="max-width: 240px; width: 150px"
         >
           <el-option
@@ -21,10 +22,13 @@
           @change="searchHandle"
           :placeholder="$t('views.application.applicationList.searchBar.placeholder')"
           prefix-icon="Search"
-          class="w-240"
+          class="w-240 mr-12"
           style="max-width: 240px"
           clearable
         />
+        <el-button @click="openCreateDialog" 
+        type="primary">创建知识库</el-button>
+
       </div>
     </div>
     <div v-loading.fullscreen.lock="paginationConfig.current_page === 1 && loading">
@@ -37,9 +41,6 @@
         :loading="loading"
       >
         <el-row :gutter="15">
-          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="mb-16">
-            <CardAdd title="创建知识库" @click="openCreateDialog" />
-          </el-col>
           <template v-for="(item, index) in datasetList" :key="index">
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="mb-16">
               <CardBox
@@ -61,13 +62,6 @@
                     <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
                   </AppAvatar>
                 </template>
-                <template #subTitle>
-                  <el-text class="color-secondary" size="small">
-                    <auto-tooltip :content="item.username">
-                      创建者: {{ item.username }}
-                    </auto-tooltip>
-                  </el-text>
-                </template>
                 <div class="delete-button">
                   <el-tag class="blue-tag" v-if="item.type === '0'" style="height: 22px"
                     >通用型</el-tag
@@ -84,11 +78,11 @@
                 <template #footer>
                   <div class="footer-content flex-between">
                     <div>
-                      <span class="bold">{{ item?.document_count || 0 }}</span>
+                      <span >{{ item.username}}</span>
+                      <el-divider direction="vertical" />
+                      <span >{{ item?.document_count || 0 }}</span>
                       文档<el-divider direction="vertical" />
-                      <span class="bold">{{ numberFormat(item?.char_length) || 0 }}</span>
-                      字符<el-divider direction="vertical" />
-                      <span class="bold">{{ item?.application_mapping_count || 0 }}</span>
+                      <span >{{ item?.application_mapping_count || 0 }}</span>
                       关联应用
                     </div>
                     <div @click.stop>
@@ -99,29 +93,10 @@
                         <template #dropdown>
                           <el-dropdown-menu>
                             <el-dropdown-item
-                              icon="Refresh"
-                              @click.stop="syncDataset(item)"
-                              v-if="item.type === '1'"
-                              >同步</el-dropdown-item
-                            >
-                            <el-dropdown-item @click="reEmbeddingDataset(item)">
-                              <AppIcon
-                                iconName="app-document-refresh"
-                                style="font-size: 16px"
-                              ></AppIcon>
-                              向量化</el-dropdown-item
-                            >
-                            <el-dropdown-item
                               icon="Setting"
                               @click.stop="router.push({ path: `/dataset/${item.id}/setting` })"
                             >
                               设置</el-dropdown-item
-                            >
-                            <el-dropdown-item @click.stop="export_dataset(item)">
-                              <AppIcon iconName="app-export"></AppIcon>导出Excel</el-dropdown-item
-                            >
-                            <el-dropdown-item @click.stop="export_zip_dataset(item)">
-                              <AppIcon iconName="app-export"></AppIcon>导出ZIP</el-dropdown-item
                             >
                             <el-dropdown-item icon="Delete" @click.stop="deleteDataset(item)"
                               >删除</el-dropdown-item
@@ -179,26 +154,8 @@ const userOptions = ref<UserOption[]>([])
 const selectUserId = ref('all')
 
 function openCreateDialog() {
-  if (user.isEnterprise()) {
-    CreateDatasetDialogRef.value.open()
-  } else {
-    MsgConfirm(`提示`, '社区版最多支持 50 个知识库，如需拥有更多知识库，请升级为专业版。', {
-      cancelButtonText: '确定',
-      confirmButtonText: '购买专业版'
-    })
-      .then(() => {
-        window.open('https://maxkb.cn/pricing.html', '_blank')
-      })
-      .catch(() => {
-        common
-          .asyncGetValid(ValidType.Dataset, ValidCount.Dataset, loading)
-          .then(async (res: any) => {
-            if (res?.data) {
-              CreateDatasetDialogRef.value.open()
-            }
-          })
-      })
-  }
+  CreateDatasetDialogRef.value.open()
+
 }
 
 function refresh() {
@@ -236,8 +193,8 @@ const export_zip_dataset = (item: any) => {
 
 function deleteDataset(row: any) {
   MsgConfirm(
-    `是否删除知识库：${row.name} ?`,
-    `此知识库关联 ${row.application_mapping_count} 个应用，删除后无法恢复，请谨慎操作。`,
+    `删除警告`,
+    `“${row.name}” 知识库关联 ${row.application_mapping_count} 个应用，删除后无法恢复，请确认！`,
     {
       confirmButtonText: '删除',
       confirmButtonClass: 'danger'

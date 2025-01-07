@@ -8,6 +8,7 @@ export default {
         MenuItem: {
             application: "Application",
             dataset: "Knowledge base",
+            search: "Search Knowledge base",            
             setting: "System settings"
         },
         avatar: {
@@ -16,6 +17,7 @@ export default {
             logout: "Logout",
             version: "Version",
             apiKey: "API Key",
+            setting: "Setting",
             apiServiceAddress: "API Service Address",
             dialog: {
                 newPassword: "New password",

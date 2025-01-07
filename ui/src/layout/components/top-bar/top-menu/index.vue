@@ -1,5 +1,6 @@
 <template>
-  <div class="top-menu-container flex align-center h-full">
+  <div class="top-menu-container flex align-center h-full"
+  style="border-radius: 20px; background-color: #ebe9e9; height: 80%;">
     <MenuItem
       :menu="menu"
       v-hasPermission="menu.meta?.permission"
@@ -15,7 +16,9 @@ import { getChildRouteListByPathAndName } from '@/router/index'
 import MenuItem from './MenuItem.vue'
 
 const topMenuList = computed(() => {
-  return getChildRouteListByPathAndName('/', 'home')
+  var tMenuList = getChildRouteListByPathAndName('/', 'home')
+                    .filter(v => v.name !== 'setting')
+  return tMenuList
 })
 </script>
 <style lang="scss" scope>

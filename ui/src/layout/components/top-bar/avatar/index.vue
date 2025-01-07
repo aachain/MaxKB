@@ -23,14 +23,10 @@
         <el-dropdown-item class="border-t p-8" @click="openResetPassword">
           {{ $t('layout.topbar.avatar.resetPassword') }}
         </el-dropdown-item>
-        <div v-hasPermission="new ComplexPermission([], ['x-pack'], 'OR')">
-          <el-dropdown-item class="border-t p-8" @click="openAPIKeyDialog">
-            {{ $t('layout.topbar.avatar.apiKey') }}
-          </el-dropdown-item>
-        </div>
-        <el-dropdown-item class="border-t" @click="openAbout">
-          {{ $t('layout.topbar.avatar.about') }}
+        <el-dropdown-item class="border-t p-8" @click="openSetting">
+          {{ $t('layout.topbar.avatar.setting') }}
         </el-dropdown-item>
+
         <el-dropdown-item class="border-t" @click="logout">
           {{ $t('layout.topbar.avatar.logout') }}
         </el-dropdown-item>
@@ -64,8 +60,8 @@ const openAbout = () => {
   AboutDialogRef.value?.open()
 }
 
-function openAPIKeyDialog() {
-  APIKeyDialogRef.value.open()
+function openSetting() {
+  router.push({ path: `/user` })
 }
 
 const openResetPassword = () => {

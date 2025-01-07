@@ -12,6 +12,7 @@ export default {
         MenuItem: {
             application: "应用",
             dataset: "知识库",
+            search: "搜索",
             setting: "系统管理"
         },
         avatar: {
@@ -20,6 +21,7 @@ export default {
             logout: "退出",
             version:"版本号",
             apiKey: "API Key 管理",
+            setting: "设置",
             apiServiceAddress: "API 服务地址",
             dialog:{
                 newPassword:"新密码",
