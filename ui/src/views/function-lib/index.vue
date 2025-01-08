@@ -1,7 +1,7 @@
 <template>
   <div class="function-lib-list-container p-24" style="padding-top: 16px">
     <div class="flex-between mb-16">
-      <h2>我的工具箱</h2>
+      <h2>函数库</h2>
       <div class="flex-between">
         <el-select
           v-model="selectUserId"
@@ -20,13 +20,13 @@
         <el-input
           v-model="searchValue"
           @change="searchHandle"
-          placeholder="按工具名称搜索"
+          placeholder="按函数名称搜索"
           prefix-icon="Search"
           class="w-240 mr-12"
           style="max-width: 240px"
           clearable
         />
-        <el-button @click="openCreateDialog" type="primary">创建工具</el-button>
+        <el-button @click="openCreateDialog" type="primary">创建函数</el-button>
       </div>
     </div>
     <div
@@ -120,14 +120,14 @@
         </el-row>
       </InfiniteScroll>
     </div>
-    <FunctionFormDialog ref="FunctionFormDialogRef" @refresh="refresh" :title="title" />
+    <FunctionFormDrawer ref="FunctionFormDrawerRef" @refresh="refresh" :title="title" />
   </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
 import { cloneDeep } from 'lodash'
 import functionLibApi from '@/api/function-lib'
-import FunctionFormDialog from './component/FunctionFormDialog.vue'
+import FunctionFormDrawer from './component/FunctionFormDrawer.vue'
 import { MsgSuccess, MsgConfirm } from '@/utils/message'
 import useStore from '@/stores'
 import applicationApi from '@/api/application'
@@ -135,7 +135,7 @@ const { user } = useStore()
 
 const loading = ref(false)
 
-const FunctionFormDialogRef = ref()
+const FunctionFormDrawerRef = ref()
 
 const functionLibList = ref<any[]>([])
 
@@ -163,13 +163,13 @@ const canEdit = (row: any) => {
 }
 
 function openCreateDialog(data?: any) {
-  title.value = data ? '编辑工具' : '创建工具'
+  title.value = data ? '编辑函数' : '创建函数'
   if (data) {
     if (data?.permission_type !== 'PUBLIC' || canEdit(data)) {
-      FunctionFormDialogRef.value.open(data)
+      FunctionFormDrawerRef.value.open(data)
     }
   } else {
-    FunctionFormDialogRef.value.open(data)
+    FunctionFormDrawerRef.value.open(data)
   }
 }
 
@@ -186,8 +186,8 @@ function searchHandle() {
 function changeState(bool: Boolean, row: any) {
   if (!bool) {
     MsgConfirm(
-      `是否禁用工具：${row.name} ?`,
-      `禁用后，引用了该工具的应用提问时会报错 ，请谨慎操作。`,
+      `是否禁用函数：${row.name} ?`,
+      `禁用后，引用了该函数的应用提问时会报错 ，请谨慎操作。`,
       {
         confirmButtonText: '禁用',
         confirmButtonClass: 'danger'
@@ -212,8 +212,8 @@ function changeState(bool: Boolean, row: any) {
 
 function deleteFunctionLib(row: any) {
   MsgConfirm(
-    `是否删除工具：${row.name} ?`,
-    '删除后，引用了该工具的应用提问时会报错 ，请谨慎操作。',
+    `是否删除函数：${row.name} ?`,
+    '删除后，引用了该函数的应用提问时会报错 ，请谨慎操作。',
     {
       confirmButtonText: '删除',
       cancelButtonText: '取消',
@@ -231,11 +231,11 @@ function deleteFunctionLib(row: any) {
 }
 
 function copyFunctionLib(row: any) {
-  title.value = '复制工具'
+  title.value = '复制函数'
   const obj = cloneDeep(row)
   delete obj['id']
   obj['name'] = obj['name'] + ' 副本'
-  FunctionFormDialogRef.value.open(obj)
+  FunctionFormDrawerRef.value.open(obj)
 }
 
 function getList() {
