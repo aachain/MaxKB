@@ -3,7 +3,7 @@
     <LayoutContainer>
       <template #header>
         <h4>
-          命中测试
+          搜索测试
           <el-text type="info" class="ml-4">针对用户提问调试段落匹配情况，保障回答效果。</el-text>
         </h4>
       </template>

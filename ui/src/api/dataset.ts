@@ -150,7 +150,7 @@ const listUsableApplication: (
 }
 
 /**
- * 命中测试列表
+ * 搜索测试列表
  * @param dataset_id
  * @param loading
  * @query  { query_text: string, top_number: number, similarity: number }

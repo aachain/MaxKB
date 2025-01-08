@@ -64,14 +64,14 @@
                 </template>
                 <div class="delete-button">
                   <el-tag class="blue-tag" v-if="item.type === '0'" style="height: 22px"
-                    >通用型</el-tag
+                    >通用知识库</el-tag
                   >
                   <el-tag
                     class="purple-tag"
                     v-else-if="item.type === '1'"
                     type="warning"
                     style="height: 22px"
-                    >Web 站点</el-tag
+                    >Web站点知识库</el-tag
                   >
                 </div>
 

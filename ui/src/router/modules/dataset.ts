@@ -57,7 +57,7 @@ const datasetRouter = {
           name: 'DatasetHitTest',
           meta: {
             icon: 'app-hit-test',
-            title: '命中测试',
+            title: '搜索测试',
             active: 'hit-test',
             parentPath: '/dataset/:id',
             parentName: 'DatasetDetail'

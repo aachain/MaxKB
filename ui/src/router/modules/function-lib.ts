@@ -2,14 +2,14 @@ import Layout from '@/layout/layout-template/DetailLayout.vue'
 const functionLibRouter = {
   path: '/function-lib',
   name: 'function-lib',
-  meta: { title: '函数库', permission: 'APPLICATION:READ' },
+  meta: { title: '工具库', permission: 'APPLICATION:READ' },
   redirect: '/function-lib',
   component: () => import('@/layout/layout-template/AppLayout.vue'),
   children: [
     {
       path: '/function-lib',
       name: 'function-lib-index',
-      meta: { title: '函数库主页', activeMenu: '/function-lib' },
+      meta: { title: '工具库主页', activeMenu: '/function-lib' },
       component: () => import('@/views/function-lib/index.vue')
     }
   ]

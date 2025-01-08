@@ -1,7 +1,7 @@
 <template>
   <el-row class="not-found-container">
-    <el-col class="img" :xs="0" :sm="0" :md="12" :lg="12" :xl="12"> </el-col>
-    <el-col class="message-container" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+    <el-col class="img" :xs="0" :sm="0" :md="16" :lg="16" :xl="16"> </el-col>
+    <el-col class="message-container" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
       <div class="title">{{ $t('views.notFound.title')}}</div>
       <div class="message">{{ $t('views.notFound.message') }}</div>
       <!-- TODO 暂时不处理 -->

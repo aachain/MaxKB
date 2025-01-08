@@ -189,7 +189,7 @@ function getChartOpenId(chat?: any) {
 }
 
 /**
- * 获取一个递归函数,处理流式数据
+ * 获取一个递归工具,处理流式数据
  * @param chat    每一条对话记录
  * @param reader  流数据
  * @param stream  是否是流式数据

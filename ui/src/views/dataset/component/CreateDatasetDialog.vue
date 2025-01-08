@@ -32,7 +32,7 @@
                       <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
                     </AppAvatar>
                     <div>
-                      <p><el-text>通用型</el-text></p>
+                      <p><el-text>通用知识库</el-text></p>
                       <el-text type="info">上传本地文件或手动录入</el-text>
                     </div>
                   </div>
@@ -53,7 +53,7 @@
                       <img src="@/assets/icon_web.svg" style="width: 58%" alt="" />
                     </AppAvatar>
                     <div>
-                      <p><el-text>Web 站点</el-text></p>
+                      <p><el-text>Web站点知识库</el-text></p>
                       <el-text type="info">同步Web网站文本数据</el-text>
                     </div>
                   </div>

@@ -1,11 +1,12 @@
 <template>
   <div class="function-lib-list-container p-24" style="padding-top: 16px">
     <div class="flex-between mb-16">
-      <h4>函数库</h4>
+      <h2>工具库</h2>
       <div class="flex-between">
         <el-select
           v-model="selectUserId"
           class="mr-12"
+          v-show="false"
           style="max-width: 240px; width: 150px"
           @change="searchHandle"
         >
@@ -19,12 +20,13 @@
         <el-input
           v-model="searchValue"
           @change="searchHandle"
-          placeholder="按函数名称搜索"
+          placeholder="按工具名称搜索"
           prefix-icon="Search"
-          class="w-240"
+          class="w-240 mr-12"
           style="max-width: 240px"
           clearable
         />
+        <el-button @click="openCreateDialog()" type="primary">创建工具</el-button>
       </div>
     </div>
     <div
@@ -41,9 +43,7 @@
         :loading="loading"
       >
         <el-row :gutter="15">
-          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="mb-16">
-            <CardAdd title="创建函数" @click="openCreateDialog()" />
-          </el-col>
+
           <el-col
             :xs="24"
             :sm="12"
@@ -164,7 +164,7 @@ const canEdit = (row: any) => {
 }
 
 function openCreateDialog(data?: any) {
-  title.value = data ? '编辑函数' : '创建函数'
+  title.value = data ? '编辑工具' : '创建工具'
   if (data) {
     if (data?.permission_type !== 'PUBLIC' || canEdit(data)) {
       FunctionFormDrawerRef.value.open(data)
@@ -187,8 +187,8 @@ function searchHandle() {
 function changeState(bool: Boolean, row: any) {
   if (!bool) {
     MsgConfirm(
-      `是否禁用函数：${row.name} ?`,
-      `禁用后，引用了该函数的应用提问时会报错 ，请谨慎操作。`,
+      `是否禁用工具：${row.name} ?`,
+      `禁用后，引用了该工具的应用提问时会报错 ，请谨慎操作。`,
       {
         confirmButtonText: '禁用',
         confirmButtonClass: 'danger'
@@ -213,8 +213,8 @@ function changeState(bool: Boolean, row: any) {
 
 function deleteFunctionLib(row: any) {
   MsgConfirm(
-    `是否删除函数：${row.name} ?`,
-    '删除后，引用了该函数的应用提问时会报错 ，请谨慎操作。',
+    `是否删除工具：${row.name} ?`,
+    '删除后，引用了该工具的应用提问时会报错 ，请谨慎操作。',
     {
       confirmButtonText: '删除',
       cancelButtonText: '取消',
@@ -232,7 +232,7 @@ function deleteFunctionLib(row: any) {
 }
 
 function copyFunctionLib(row: any) {
-  title.value = '复制函数'
+  title.value = '复制工具'
   const obj = cloneDeep(row)
   delete obj['id']
   obj['name'] = obj['name'] + ' 副本'

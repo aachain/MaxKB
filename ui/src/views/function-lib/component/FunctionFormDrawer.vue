@@ -13,10 +13,10 @@
         require-asterisk-position="right"
         v-loading="loading"
       >
-        <el-form-item label="函数名称" prop="name">
+        <el-form-item label="工具名称" prop="name">
           <el-input
             v-model="form.name"
-            placeholder="请输入函数名称"
+            placeholder="请输入工具名称"
             maxlength="64"
             show-word-limit
             @blur="form.name = form.name?.trim()"
@@ -26,7 +26,7 @@
           <el-input
             v-model="form.desc"
             type="textarea"
-            placeholder="请输入函数的描述"
+            placeholder="请输入工具的描述"
             maxlength="128"
             show-word-limit
             :autosize="{ minRows: 3 }"
@@ -62,7 +62,7 @@
       </el-form>
       <div class="flex-between">
         <h4 class="title-decoration-1 mb-16">
-          输入参数 <el-text type="info" class="color-secondary"> 使用函数时显示 </el-text>
+          输入参数 <el-text type="info" class="color-secondary"> 使用工具时显示 </el-text>
         </h4>
         <el-button link type="primary" @click="openAddDialog()">
           <el-icon class="mr-4"><Plus /></el-icon> 添加
@@ -108,7 +108,7 @@
         </el-table-column>
       </el-table>
       <h4 class="title-decoration-1 mb-16">
-        Python 代码 <el-text type="info" class="color-secondary"> 使用函数时不显示 </el-text>
+        Python 代码 <el-text type="info" class="color-secondary"> 使用工具时不显示 </el-text>
       </h4>
 
       <div class="function-CodemirrorEditor mb-8" v-if="showEditor">
@@ -120,7 +120,7 @@
         </div>
       </div>
       <h4 class="title-decoration-1 mb-16 mt-16">
-        输出参数 <el-text type="info" class="color-secondary"> 使用函数时显示 </el-text>
+        输出参数 <el-text type="info" class="color-secondary"> 使用工具时显示 </el-text>
       </h4>
       <div class="flex-between border-r-4 p-8-12 mb-8 layout-bg lighter">
         <span>结果 {result}</span>
@@ -207,7 +207,7 @@ watch(visible, (bool) => {
 })
 
 const rules = reactive({
-  name: [{ required: true, message: '请输入函数名称', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入工具名称', trigger: 'blur' }],
   permission_type: [{ required: true, message: '请选择', trigger: 'change' }]
 })
 

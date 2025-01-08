@@ -20,7 +20,7 @@
                     <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
                   </AppAvatar>
                   <div>
-                    <div>通用型</div>
+                    <div>通用知识库</div>
                     <el-text type="info">可以通过上传文件或手动录入方式构建知识库</el-text>
                   </div>
                 </div>
@@ -31,7 +31,7 @@
                     <img src="@/assets/icon_web.svg" style="width: 58%" alt="" />
                   </AppAvatar>
                   <div>
-                    <div>Web 站点</div>
+                    <div>Web站点知识库</div>
                     <el-text type="info"> 通过网站链接同步方式构建知识库 </el-text>
                   </div>
                 </div>
