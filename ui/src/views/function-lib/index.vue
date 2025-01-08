@@ -1,12 +1,11 @@
 <template>
   <div class="function-lib-list-container p-24" style="padding-top: 16px">
     <div class="flex-between mb-16">
-      <h2>函数库</h2>
+      <h4>函数库</h4>
       <div class="flex-between">
         <el-select
           v-model="selectUserId"
           class="mr-12"
-          v-show="false"
           style="max-width: 240px; width: 150px"
           @change="searchHandle"
         >
@@ -22,11 +21,10 @@
           @change="searchHandle"
           placeholder="按函数名称搜索"
           prefix-icon="Search"
-          class="w-240 mr-12"
+          class="w-240"
           style="max-width: 240px"
           clearable
         />
-        <el-button @click="openCreateDialog" type="primary">创建函数</el-button>
       </div>
     </div>
     <div
@@ -43,6 +41,9 @@
         :loading="loading"
       >
         <el-row :gutter="15">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="mb-16">
+            <CardAdd title="创建函数" @click="openCreateDialog()" />
+          </el-col>
           <el-col
             :xs="24"
             :sm="12"
