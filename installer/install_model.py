@@ -61,6 +61,13 @@ model_config = [
             'file_save_paths': [os.path.join(prefix_dir, 'embedding',"m3e-base")]
         },
         'download_function': hg.get_batch_data
+    },
+    {
+        'download_params': {
+            'urls': ["https://huggingface.co/DMetaSoul/Dmeta-embedding-zh/tree/main"],
+            'file_save_paths': [os.path.join(prefix_dir, 'embedding',"Dmeta-embedding-zh")]
+        },
+        'download_function': hg.get_batch_data
     }
 
 ]
